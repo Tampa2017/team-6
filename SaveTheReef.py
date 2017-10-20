@@ -35,7 +35,6 @@ INVULNTIME = 2       # how long the player is invulnerable after being hit in se
 GAMEOVERTIME = 4     # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3        # how much health the player starts with
 
-NUMGRASS = 80        # number of grass objects in the active area
 NUMSQUIRRELS = 30    # number of squirrels in the active area
 SQUIRRELMINSPEED = 3 # slowest squirrel speed
 SQUIRRELMAXSPEED = 7 # fastest squirrel speed
@@ -44,7 +43,7 @@ LEFT = 'left'
 RIGHT = 'right'
 
 """
-This program has three data structures to represent the player, enemy squirrels, and grass background objects. The data structures are dictionaries with the following keys:
+This program has three data structures to represent the player, enemy squirrels. The data structures are dictionaries with the following keys:
 
 Keys used by all three data structures:
     'x' - the left edge coordinate of the object in the game world (not a pixel coordinate on the screen)
@@ -102,7 +101,7 @@ def runGame():
     gameOverRect = gameOverSurf.get_rect()
     gameOverRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
-    winSurf = BASICFONT.render('You have achieved OMEGA SQUIRREL!', True, GREEN)
+    winSurf = BASICFONT.render('You have achieved OMEGA FROG RECYCLER!', True, GREEN)
     winRect = winSurf.get_rect()
     winRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
@@ -114,7 +113,6 @@ def runGame():
     camerax = 0
     cameray = 0
 
-    grassObjs = []    # stores all the grass objects in the game
     squirrelObjs = [] # stores all the non-player squirrel objects
     # stores the player object:
     playerObj = {'surface': pygame.transform.scale(L_SQUIR_IMG, (STARTSIZE, STARTSIZE)),
@@ -130,11 +128,6 @@ def runGame():
     moveUp    = False
     moveDown  = False
 
-    # start off with some random grass images on the screen
-    for i in range(10):
-        grassObjs.append(makeNewGrass(camerax, cameray))
-        grassObjs[i]['x'] = random.randint(0, WINWIDTH)
-        grassObjs[i]['y'] = random.randint(0, WINHEIGHT)
 
     while True: # main game loop
         # Check if we should turn off invulnerability
@@ -159,18 +152,11 @@ def runGame():
                 else: # faces left
                     sObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (sObj['width'], sObj['height']))
 
-
-        # go through all the objects and see if any need to be deleted.
-        for i in range(len(grassObjs) - 1, -1, -1):
-            if isOutsideActiveArea(camerax, cameray, grassObjs[i]):
-                del grassObjs[i]
         for i in range(len(squirrelObjs) - 1, -1, -1):
             if isOutsideActiveArea(camerax, cameray, squirrelObjs[i]):
                 del squirrelObjs[i]
 
-        # add more grass & squirrels if we don't have enough.
-        while len(grassObjs) < NUMGRASS:
-            grassObjs.append(makeNewGrass(camerax, cameray))
+
         while len(squirrelObjs) < NUMSQUIRRELS:
             squirrelObjs.append(makeNewSquirrel(camerax, cameray))
 
@@ -186,17 +172,8 @@ def runGame():
         elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACK:
             cameray = playerCentery - CAMERASLACK - HALF_WINHEIGHT
 
-        # draw the green background
+        # draw the white background
         DISPLAYSURF.fill(WHITE)
-
-        # draw all the grass objects on the screen
-        for gObj in grassObjs:
-            gRect = pygame.Rect( (gObj['x'] - camerax,
-                                  gObj['y'] - cameray,
-                                  gObj['width'],
-                                  gObj['height']) )
-            DISPLAYSURF.blit(BACKGROUNDIMAGES[gObj['grassImage']], gRect)
-
 
         # draw the other squirrels
         for sObj in squirrelObjs:
@@ -379,15 +356,6 @@ def makeNewSquirrel(camerax, cameray):
     sq['bounceheight'] = random.randint(10, 50)
     return sq
 
-
-def makeNewGrass(camerax, cameray):
-    gr = {}
-    gr['grassImage'] = random.randint(0, len(BACKGROUNDIMAGES) - 1)
-    gr['width']  = BACKGROUNDIMAGES[0].get_width()
-    gr['height'] = BACKGROUNDIMAGES[0].get_height()
-    gr['x'], gr['y'] = getRandomOffCameraPos(camerax, cameray, gr['width'], gr['height'])
-    gr['rect'] = pygame.Rect( (gr['x'], gr['y'], gr['width'], gr['height']) )
-    return gr
 
 
 def isOutsideActiveArea(camerax, cameray, obj):
