@@ -1,0 +1,169 @@
+
+/* The sidenav */
+html {
+  background: url('../studentdashbackground.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.wrapper {
+  /*background-color: #cce6ff;*/
+  /*background-color: #0066cc;*/
+  /*background-image:
+  /*linear-gradient(to bottom, rgba(150,150,150,0.5), rgba(0,0,255,0.5)),*/
+  url('studentdashbackground.jpg');
+   color: white;
+  height: 100%;
+  width: 100%;
+}
+
+#content {
+    position: relative;
+}
+#content img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 10%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /*background-color: #0066cc;*/
+  background-color: transparent;
+  overflow-x: hidden;
+  padding-top: 20px;
+  transition: 0.5s;
+  font-family: sans-serif;
+ color: white;
+
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    padding-top: 30px;
+    padding-bottom: 90px;
+    text-decoration: none;
+    font-size: 25px;
+  color: white;
+    display: block;
+    transition: 0.3s
+
+}
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+      color: #666666;
+}
+/* Page content */
+.main {
+  height:50%;
+  width: 90%;
+  margin-left: 200px; /* Same as the width of the sidenav */
+padding-bottom: 100px;
+padding-top: 100px;
+text-align: center;
+/*background-color: #4da6ff;*/
+background: transparent;
+font-family: sans-serif;
+color: white;
+
+
+}
+h1 {
+   text-align: center;
+   font-family: sans-serif;
+   color: white;
+}
+
+.main p {
+   text-align: center;
+   font-family: sans-serif;
+   color: white;
+}
+
+.navbar {
+     margin-bottom: 0;
+     border-radius: 0;
+     color: white;
+
+  }
+
+   /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+   .row.content {height: 100%;
+      color: white;
+  }
+
+   /* Set black background color, white text and some padding */
+
+
+   /* On small screens, set height to 'auto' for sidenav and grid */
+   @media screen and (max-width: 767px) {
+     .sidenav {
+       height: auto;
+       padding: 15px;
+     }
+     .row.content {height:auto;
+
+     }
+   }
+
+
+.tile {
+    float: right;
+    width: 90%;
+    height: 50%;
+    padding-bottom: 250px;
+    text-align: center;
+    background-color: transparent;
+    font-family: sans-serif;
+}
+
+.container {
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  display: flex;
+}
+.container .btn-holder {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.button1:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+
+
+
+footer {
+  background-color: #555;
+  color: white;
+}
