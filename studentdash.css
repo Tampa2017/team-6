@@ -17,6 +17,16 @@ html {
   height: 100%;
   width: 100%;
 }
+
+#content {
+    position: relative;
+}
+#content img {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
 .sidenav {
   height: 100%;
   width: 10%;
@@ -36,6 +46,8 @@ html {
 
 .sidenav a {
     padding: 8px 8px 8px 32px;
+    padding-top: 30px;
+    padding-bottom: 90px;
     text-decoration: none;
     font-size: 25px;
   color: white;
@@ -52,11 +64,14 @@ html {
   height:50%;
   width: 90%;
   margin-left: 200px; /* Same as the width of the sidenav */
+padding-bottom: 100px;
+padding-top: 100px;
 text-align: center;
 /*background-color: #4da6ff;*/
 background: transparent;
 font-family: sans-serif;
 color: white;
+
 
 }
 h1 {
@@ -98,21 +113,16 @@ h1 {
    }
 
 
-   .first {
+.tile {
     float: right;
     width: 45%;
-
+    height: 50%;
+    text-align: center;
     background-color: transparent;
     font-family: sans-serif;
 }
 
-.second{
-    float: right;
-    width: 45%;
 
-    background-color: transparent;
-    font-family: sans-serif;
-}
 
 footer {
   background-color: #555;
