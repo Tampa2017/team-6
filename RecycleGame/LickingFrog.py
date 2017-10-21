@@ -1,7 +1,7 @@
 import random, sys, time, math, pygame
 from pygame.locals import *
 
-FPS = 40 # frames per second to update the screen
+FPS = 35 # frames per second to update the screen
 WINWIDTH = 640 # width of the program's window, in pixels
 WINHEIGHT = 480 # height in pixels
 HALF_WINWIDTH = int(WINWIDTH / 2)
@@ -17,8 +17,8 @@ YELLOW = (255, 255, 0)
 OCEAN_BLUE = (30, 47 * 3 + 50, 74 * 3 + 20)
 
 CAMERASLACK = 90     # how far from the center the frog moves before moving the camera
-MOVERATE = 9         # how fast the player moves
-BOUNCERATE = 6       # how fast the player bounces (large is slower)
+MOVERATE = 5         # how fast the player moves
+BOUNCERATE = 9       # how fast the player bounces (large is slower)
 BOUNCEHEIGHT = 30    # how high the player bounces
 STARTSIZE = 50       # how big the player starts off
 WINSIZE = 100        # how big the player needs to be to win
@@ -57,8 +57,6 @@ Enemy frog data structure keys:
     'bounce' - represents at what point in a bounce the player is in. 0 means standing (no bounce), up to BOUNCERATE (the completion of the bounce)
     'bouncerate' - how quickly the frog bounces. A lower number means a quicker bounce.
     'bounceheight' - how high (in pixels) the frog bounces
-Grass data structure keys:
-    'grassImage' - an integer that refers to the index of the pygame.Surface object in BACKGROUNDIMAGES used for this grass object
 """
 
 def main():
@@ -103,7 +101,7 @@ def runGame():
     gameOverRect = gameOverSurf.get_rect()
     gameOverRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
-    winSurf = BASICFONT.render('OMEGA FROG RECYCLER!', True, GREEN)
+    winSurf = BASICFONT.render('You rock at recycling!!', True, GREEN)
     winRect = winSurf.get_rect()
     winRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
@@ -135,7 +133,7 @@ def runGame():
     moveUp    = False
     moveDown  = False
 
-    while True: # main game loop
+    while (True): # main game loop
         # Check if we should turn off invulnerability
         if invulnerableMode and time.time() - invulnerableStartTime > INVULNTIME:
             invulnerableMode = False
@@ -180,8 +178,9 @@ def runGame():
 
         # draw the ocean background
         DISPLAYSURF.fill(OCEAN_BLUE)
-        ConstantSurf = BASICFONT.render("                Need to pick up " + str(TOWIN) + " more", True, GREEN)
+        ConstantSurf = BASICFONT.render("                Need to pick up " + str(TOWIN), True, GREEN)
         ConstantRect = ConstantSurf.get_rect()
+
         DISPLAYSURF.blit(ConstantSurf, ConstantRect)
 
         # draw the other frogs
