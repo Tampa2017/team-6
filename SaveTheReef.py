@@ -1,14 +1,3 @@
-# import pygame
-# pygame.init()
-
-# screen = pygame.display.set_mode
-
-
-# Squirrel Eat Squirrel (a 2D Katamari Damacy clone)
-# By Al Sweigart al@inventwithpython.com
-# http://inventwithpython.com/pygame
-# Released under a "Simplified BSD" license
-
 import random, sys, time, math, pygame
 from pygame.locals import *
 
@@ -25,7 +14,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0,0,0)
 
-CAMERASLACK = 90     # how far from the center the squirrel moves before moving the camera
+CAMERASLACK = 90     # how far from the center the frog moves before moving the camera
 MOVERATE = 9         # how fast the player moves
 BOUNCERATE = 6       # how fast the player bounces (large is slower)
 BOUNCEHEIGHT = 30    # how high the player bounces
@@ -35,41 +24,41 @@ INVULNTIME = 2       # how long the player is invulnerable after being hit in se
 GAMEOVERTIME = 4     # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3        # how much health the player starts with
 
-NUMSQUIRRELS = 30    # number of squirrels in the active area
-SQUIRRELMINSPEED = 3 # slowest squirrel speed
-SQUIRRELMAXSPEED = 7 # fastest squirrel speed
+NUMfrogS = 30    # number of frogs in the active area
+frogMINSPEED = 3 # slowest frog speed
+frogMAXSPEED = 7 # fastest frog speed
 DIRCHANGEFREQ = 2    # % chance of direction change per frame
 LEFT = 'left'
 RIGHT = 'right'
 
 """
-This program has three data structures to represent the player, enemy squirrels. The data structures are dictionaries with the following keys:
+This program has three data structures to represent the player, enemy frogs. The data structures are dictionaries with the following keys:
 
 Keys used by all three data structures:
     'x' - the left edge coordinate of the object in the game world (not a pixel coordinate on the screen)
     'y' - the top edge coordinate of the object in the game world (not a pixel coordinate on the screen)
     'rect' - the pygame.Rect object representing where on the screen the object is located.
 Player data structure keys:
-    'surface' - the pygame.Surface object that stores the image of the squirrel which will be drawn to the screen.
+    'surface' - the pygame.Surface object that stores the image of the frog which will be drawn to the screen.
     'facing' - either set to LEFT or RIGHT, stores which direction the player is facing.
     'size' - the width and height of the player in pixels. (The width & height are always the same.)
     'bounce' - represents at what point in a bounce the player is in. 0 means standing (no bounce), up to BOUNCERATE (the completion of the bounce)
-    'health' - an integer showing how many more times the player can be hit by a larger squirrel before dying.
-Enemy Squirrel data structure keys:
-    'surface' - the pygame.Surface object that stores the image of the squirrel which will be drawn to the screen.
-    'movex' - how many pixels per frame the squirrel moves horizontally. A negative integer is moving to the left, a positive to the right.
-    'movey' - how many pixels per frame the squirrel moves vertically. A negative integer is moving up, a positive moving down.
-    'width' - the width of the squirrel's image, in pixels
-    'height' - the height of the squirrel's image, in pixels
+    'health' - an integer showing how many more times the player can be hit by a larger frog before dying.
+Enemy frog data structure keys:
+    'surface' - the pygame.Surface object that stores the image of the frog which will be drawn to the screen.
+    'movex' - how many pixels per frame the frog moves horizontally. A negative integer is moving to the left, a positive to the right.
+    'movey' - how many pixels per frame the frog moves vertically. A negative integer is moving up, a positive moving down.
+    'width' - the width of the frog's image, in pixels
+    'height' - the height of the frog's image, in pixels
     'bounce' - represents at what point in a bounce the player is in. 0 means standing (no bounce), up to BOUNCERATE (the completion of the bounce)
-    'bouncerate' - how quickly the squirrel bounces. A lower number means a quicker bounce.
-    'bounceheight' - how high (in pixels) the squirrel bounces
+    'bouncerate' - how quickly the frog bounces. A lower number means a quicker bounce.
+    'bounceheight' - how high (in pixels) the frog bounces
 Grass data structure keys:
     'grassImage' - an integer that refers to the index of the pygame.Surface object in BACKGROUNDIMAGES used for this grass object
 """
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_SQUIR_IMG, R_SQUIR_IMG, BACKGROUNDIMAGES
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_FROG_IMG, R_FROG_IMG, BACKGROUNDIMAGES
 
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -79,10 +68,17 @@ def main():
     BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
 
     # load the image files
-    L_SQUIR_IMG = pygame.image.load('frog.jpg')
-    R_SQUIR_IMG = pygame.transform.flip(L_SQUIR_IMG, True, False)
+    L_FROG_IMG = pygame.image.load('frog.jpg')
+    R_FROG_IMG = pygame.transform.flip(L_FROG_IMG, True, False)
     BACKGROUNDIMAGES = []
     BACKGROUNDIMAGES.append(pygame.image.load('plain.jpg'))
+
+    #Good Array - These things are recyclable
+    GoodObjs = []
+    GoodObjs.append("water bottle")
+    #Bad Array - These things aren't recyclable
+    BadObjs = []
+    BadObjs.append("tires")
 
     while True:
         runGame()
@@ -113,9 +109,9 @@ def runGame():
     camerax = 0
     cameray = 0
 
-    squirrelObjs = [] # stores all the non-player squirrel objects
+    Objs = [] # stores all the non-player frog objects
     # stores the player object:
-    playerObj = {'surface': pygame.transform.scale(L_SQUIR_IMG, (STARTSIZE, STARTSIZE)),
+    playerObj = {'surface': pygame.transform.scale(L_FROG_IMG, (STARTSIZE, STARTSIZE)),
                  'facing': LEFT,
                  'size': STARTSIZE,
                  'x': HALF_WINWIDTH,
@@ -134,9 +130,9 @@ def runGame():
         if invulnerableMode and time.time() - invulnerableStartTime > INVULNTIME:
             invulnerableMode = False
 
-        # move all the squirrels
-        for sObj in squirrelObjs:
-            # move the squirrel, and adjust for their bounce
+        # move all the frogs
+        for sObj in Objs:
+            # move the frog, and adjust for their bounce
             sObj['x'] += sObj['movex']
             sObj['y'] += sObj['movey']
             sObj['bounce'] += 1
@@ -148,17 +144,17 @@ def runGame():
                 sObj['movex'] = getRandomVelocity()
                 sObj['movey'] = getRandomVelocity()
                 if sObj['movex'] > 0: # faces right
-                    sObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (sObj['width'], sObj['height']))
+                    sObj['surface'] = pygame.transform.scale(R_FROG_IMG, (sObj['width'], sObj['height']))
                 else: # faces left
-                    sObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (sObj['width'], sObj['height']))
+                    sObj['surface'] = pygame.transform.scale(L_FROG_IMG, (sObj['width'], sObj['height']))
 
-        for i in range(len(squirrelObjs) - 1, -1, -1):
-            if isOutsideActiveArea(camerax, cameray, squirrelObjs[i]):
-                del squirrelObjs[i]
+        for i in range(len(Objs) - 1, -1, -1):
+            if isOutsideActiveArea(camerax, cameray, Objs[i]):
+                del Objs[i]
 
 
-        while len(squirrelObjs) < NUMSQUIRRELS:
-            squirrelObjs.append(makeNewSquirrel(camerax, cameray))
+        while len(Objs) < NUMfrogS:
+            Objs.append(makeNewfrog(camerax, cameray))
 
         # adjust camerax and cameray if beyond the "camera slack"
         playerCenterx = playerObj['x'] + int(playerObj['size'] / 2)
@@ -175,8 +171,8 @@ def runGame():
         # draw the white background
         DISPLAYSURF.fill(WHITE)
 
-        # draw the other squirrels
-        for sObj in squirrelObjs:
+        # draw the other frogs
+        for sObj in Objs:
             sObj['rect'] = pygame.Rect( (sObj['x'] - camerax,
                                          sObj['y'] - cameray - getBounceAmount(sObj['bounce'], sObj['bouncerate'], sObj['bounceheight']),
                                          sObj['width'],
@@ -184,7 +180,7 @@ def runGame():
             DISPLAYSURF.blit(sObj['surface'], sObj['rect'])
 
 
-        # draw the player squirrel
+        # draw the player frog
         flashIsOn = round(time.time(), 1) * 10 % 2 == 1
         if not gameOverMode and not (invulnerableMode and flashIsOn):
             playerObj['rect'] = pygame.Rect( (playerObj['x'] - camerax,
@@ -212,19 +208,19 @@ def runGame():
                     moveRight = False
                     moveLeft = True
                     if playerObj['facing'] != LEFT: # change player image
-                        playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        playerObj['surface'] = pygame.transform.scale(L_FROG_IMG, (playerObj['size'], playerObj['size']))
                     playerObj['facing'] = LEFT
                 elif event.key in (K_RIGHT, K_d):
                     moveLeft = False
                     moveRight = True
                     if playerObj['facing'] != RIGHT: # change player image
-                        playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        playerObj['surface'] = pygame.transform.scale(R_FROG_IMG, (playerObj['size'], playerObj['size']))
                     playerObj['facing'] = RIGHT
                 elif winMode and event.key == K_r:
                     return
 
             elif event.type == KEYUP:
-                # stop moving the player's squirrel
+                # stop moving the player's frog
                 if event.key in (K_LEFT, K_a):
                     moveLeft = False
                 elif event.key in (K_RIGHT, K_d):
@@ -254,21 +250,21 @@ def runGame():
             if playerObj['bounce'] > BOUNCERATE:
                 playerObj['bounce'] = 0 # reset bounce amount
 
-            # check if the player has collided with any squirrels
-            for i in range(len(squirrelObjs)-1, -1, -1):
-                sqObj = squirrelObjs[i]
+            # check if the player has collided with any frogs
+            for i in range(len(Objs)-1, -1, -1):
+                sqObj = Objs[i]
                 if 'rect' in sqObj and playerObj['rect'].colliderect(sqObj['rect']):
-                    # a player/squirrel collision has occurred
+                    # a player/frog collision has occurred
 
                     if sqObj['width'] * sqObj['height'] <= playerObj['size']**2:
-                        # player is larger and eats the squirrel
+                        # player is larger and eats the frog
                         playerObj['size'] += int( (sqObj['width'] * sqObj['height'])**0.2 ) + 1
-                        del squirrelObjs[i]
+                        del Objs[i]
 
                         if playerObj['facing'] == LEFT:
-                            playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                            playerObj['surface'] = pygame.transform.scale(L_FROG_IMG, (playerObj['size'], playerObj['size']))
                         if playerObj['facing'] == RIGHT:
-                            playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                            playerObj['surface'] = pygame.transform.scale(R_FROG_IMG, (playerObj['size'], playerObj['size']))
 
                         if playerObj['size'] > WINSIZE:
                             winMode = True # turn on "win mode"
@@ -318,7 +314,7 @@ def getBounceAmount(currentBounce, bounceRate, bounceHeight):
     return int(math.sin( (math.pi / float(bounceRate)) * currentBounce ) * bounceHeight)
 
 def getRandomVelocity():
-    speed = random.randint(SQUIRRELMINSPEED, SQUIRRELMAXSPEED)
+    speed = random.randint(frogMINSPEED, frogMAXSPEED)
     if random.randint(0, 1) == 0:
         return speed
     else:
@@ -338,7 +334,7 @@ def getRandomOffCameraPos(camerax, cameray, objWidth, objHeight):
             return x, y
 
 
-def makeNewSquirrel(camerax, cameray):
+def makeNewfrog(camerax, cameray):
     sq = {}
     generalSize = random.randint(5, 25)
     multiplier = random.randint(1, 3)
@@ -347,10 +343,10 @@ def makeNewSquirrel(camerax, cameray):
     sq['x'], sq['y'] = getRandomOffCameraPos(camerax, cameray, sq['width'], sq['height'])
     sq['movex'] = getRandomVelocity()
     sq['movey'] = getRandomVelocity()
-    if sq['movex'] < 0: # squirrel is facing left
-        sq['surface'] = pygame.transform.scale(L_SQUIR_IMG, (sq['width'], sq['height']))
-    else: # squirrel is facing right
-        sq['surface'] = pygame.transform.scale(R_SQUIR_IMG, (sq['width'], sq['height']))
+    if sq['movex'] < 0: # frog is facing left
+        sq['surface'] = pygame.transform.scale(L_FROG_IMG, (sq['width'], sq['height']))
+    else: # frog is facing right
+        sq['surface'] = pygame.transform.scale(R_FROG_IMG, (sq['width'], sq['height']))
     sq['bounce'] = 0
     sq['bouncerate'] = random.randint(10, 18)
     sq['bounceheight'] = random.randint(10, 50)
