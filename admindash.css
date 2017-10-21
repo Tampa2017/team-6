@@ -152,3 +152,12 @@ footer {
   background-color: #555;
   color: white;
 }
+
+#fixed {
+    position:fixed;
+    right:0;
+    bottom:0;
+    margin:0;
+    padding:0;
+    width:75%;
+}
