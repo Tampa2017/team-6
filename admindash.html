@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Teacher Dashboard</title>
+  <title>Admin Dashboard</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-   <link href="./admindash.css" rel="stylesheet" type="text/css">
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="..stupidtable.js?dev"></script>
+  <script>
+	$(function(){
+		$("table").stupidtable();
+	});
+  </script>
+  <style type="text/css">
+    table{
+	    border-collapse:collapse;
+    }
+    th, td {
+	    padding: 5px 10px;
+		    border: 1px solid #999
+    }
+
+    th {
+	    background-color: #888888;
+    }
+
+    th[data-sort]{
+	    cursor:pointer;
+    }
+
+    tr.awesome{
+	    color:red;
+    }
+  </style>
+
+  <link href="./admindash.css" rel="stylesheet" type="text/css">
+  
+
+
 </head>
 
 <div class="wrapper">
@@ -27,19 +59,39 @@
       </nav>
 
         <div class="main">
-  <h1>Teacher Dashboard </h1><p></p>
+  <h1>Admin Dashboard </h1><p></p>
 
-          <h3>Welcome, Mrs. Jones, to your teacher portal! Here, you can view your students' progress.</h3>
+          <h3>Welcome, Admin. Here, you can view your students' progress.</h3>
 
        </div>
           <div class = "tile">
-              <h1><a href="./Education/module.html">Educational Module</a></h1>
-          </div>
-          <div class = "tile">
-              <h1><a href="./Education/checklist.html">Good Habits Checklist</a></h1>
+	<table>
+		<thead>
+			<tr>
+				<th data-sort = "string"> Name </th>
+				<th data-sort="int">  Points </th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>Bob</td>
+				<td>0 </td>
+			<tr>
+			<tr>
+				<td> David </td>
+				<td> 15 </td>
+			</tr>
+		</tbody>
+
+
+	</table>
+
+
           </div>
 
       </div>
+
     </div>
   </div>
   </body>
