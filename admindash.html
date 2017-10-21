@@ -9,6 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="..stupidtable.js?dev"></script>
+  <script src ="jquery-3.2.1.min.js"></script>
   <script>
 	$(function(){
 		$("table").stupidtable();
@@ -75,7 +76,14 @@
 
 		<tbody>
 			<tr>
-				<td>Bob</td>
+				<td>
+					<script>
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", "https://localhost:44300/api/students/1", false);
+						xhr.send();
+						document.write(xhr.statusText);
+					</script>
+				</td>
 				<td>0 </td>
 			<tr>
 			<tr>
