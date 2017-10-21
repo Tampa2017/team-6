@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Floppy Bird</title>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Team 6" />
+      <meta name="description" content="Avoid the seaweed by tapping on the screen" />
+      <meta name="keywords" content="flappybird" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+      <!-- Open Graph tags -->
+      <meta property="og:title" content="Seaweed Shark" />
+      <meta property="og:description" content="Avoid the seaweed by tapping on the screen" />
+      <meta property="og:type" content="website" />
+
+      <!-- Style sheets -->
+      <link href="css/reset.css" rel="stylesheet">
+      <link href="css/main.css" rel="stylesheet">
+   </head>
+   <body>
+      <div id="gamecontainer">
+         <div id="gamescreen">
+            <div id="sky" class="animated">
+               <h1>
+                  <font size = "26">
+                  <center> Seaweed Shark Frenzy </center>
+                  </font>
+                  <font size = "18">
+                  <center> Click or Use the Space Bar to Fly! </center>
+                  </font>
+               </h1>
+               <div id="flyarea">
+                  <div id="ceiling"></div>
+                  <!-- This is the flying and pipe area container -->
+                  <div id="player" class="bird animated"></div>
+
+                  <div id="bigscore"></div>
+
+                  <div id="splash"></div>
+
+                  <div id="scoreboard">
+                     <div id="medal"></div>
+                     <div id="currentscore"></div>
+                     <div id="highscore"></div>
+                     <div id="replay"><img src="assets/replay.png" alt="replay"></div>
+                  </div>
+
+                  <!-- Pipes go here! -->
+               </div>
+            </div>
+            <div id="land" class="animated"><div id="debug"></div></div>
+         </div>
+      </div>
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/jquery.transit.min.js"></script>
+      <script src="js/buzz.min.js"></script>
+      <script src="js/main.js"></script>
+   </body>
+</html>
