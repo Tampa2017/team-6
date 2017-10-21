@@ -146,7 +146,8 @@ label .glyphicon {
 
 .modal-header {
     background-color: transparent;
-    color: inherit
+    Opacity: 0.9;
+	color: inherit
 }
 
 .modal-body {
@@ -160,7 +161,7 @@ label .glyphicon {
 }
 .blockG {
     position: absolute;
-    background-color: #FFF;
+    background-color: #0066cc;
     width: 10px;
     height: 24px;
     -moz-border-radius: 8px 8px 0 0;
