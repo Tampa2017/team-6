@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Daily Activity</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+   <link href="./studentdash.css" rel="stylesheet" type="text/css">
+</head>
+
+<div class="wrapper">
+  <body>
+  <div id="main">
+    <div class="container-fluid text-center">
+      <div class="row content">
+        <nav>
+        <div class="sidenav">
+          <!-- <p><img src="./man-user.png" href="./module.html"/></p> -->
+          <p><a href="./error.html">Profile</a></p>
+          <p><a href="./error.html">Games</a></p>
+          <p><a href="./error.html">Module</a></p>
+          <p><a href="./error.html">Checklist</a></p>
+        </div>
+      </nav>
+
+        <div class="main">
+  <h1>Welcome to Today's Activity! </h1><p></p>
+
+          <h3>Thanks for logging in today!! You're FIN-tastic!</h3>
+          <h3>  Choose one of the options below to gain access to your dashboard and get your day started.</h3>
+       </div>
+          <div class = "tile">
+              <h1><a href="./Education/module.html">Educational Module</a></h1>
+          </div>
+          <div class = "tile">
+              <h1><a href="./Education/checklist.html">Good Habits Checklist</a></h1>
+          </div>
+
+      </div>
+    </div>
+  </div>
+  </body>
+</div>
+</html>
