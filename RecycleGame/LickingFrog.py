@@ -21,7 +21,7 @@ MOVERATE = 9         # how fast the player moves
 BOUNCERATE = 6       # how fast the player bounces (large is slower)
 BOUNCEHEIGHT = 30    # how high the player bounces
 STARTSIZE = 50       # how big the player starts off
-WINSIZE = 300        # how big the player needs to be to win
+WINSIZE = 100        # how big the player needs to be to win
 INVULNTIME = 2       # how long the player is invulnerable after being hit in seconds
 GAMEOVERTIME = 4     # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3        # how much health the player starts with
@@ -62,8 +62,7 @@ Grass data structure keys:
 """
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_FROG_IMG, R_FROG_IMG, BACKGROUNDIMAGES, BadObjs, GoodObjs
-
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_FROG_IMG, R_FROG_IMG, BACKGROUNDIMAGES, BadObjs, GoodObjs, TOWIN
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     pygame.display.set_icon(pygame.image.load('images/gameicon.png')) #TOCHANGE
@@ -85,6 +84,7 @@ def main():
     L_TIRES_IMG = pygame.image.load("images/tires.jpg")
     R_TIRES_IMG = pygame.transform.flip(L_TIRES_IMG, True, False)
     BadObjs = [L_TIRES_IMG, R_TIRES_IMG]
+
 
     while True:
         runGame()
@@ -111,6 +111,11 @@ def runGame():
     winRect2 = winSurf2.get_rect()
     winRect2.center = (HALF_WINWIDTH, HALF_WINHEIGHT + 30)
 
+    TOWIN = 5    # how many things left to recycle til player wins
+
+
+    winRect2.center = (HALF_WINWIDTH, HALF_WINHEIGHT + 30)
+
     # camerax and cameray are the top left of where the camera view is
     camerax = 0
     cameray = 0
@@ -129,7 +134,6 @@ def runGame():
     moveRight = False
     moveUp    = False
     moveDown  = False
-
 
     while True: # main game loop
         # Check if we should turn off invulnerability
@@ -176,6 +180,9 @@ def runGame():
 
         # draw the ocean background
         DISPLAYSURF.fill(OCEAN_BLUE)
+        ConstantSurf = BASICFONT.render("                Need to pick up " + str(TOWIN) + " more", True, GREEN)
+        ConstantRect = ConstantSurf.get_rect()
+        DISPLAYSURF.blit(ConstantSurf, ConstantRect)
 
         # draw the other frogs
         for sObj in Objs:
@@ -264,6 +271,7 @@ def runGame():
 
                     if (sqObj['isgood'] == True): #* sqObj['height'] <= playerObj['size']**2:
                         # player is larger and eats the frog
+                        TOWIN -= 1
                         playerObj['size'] += int( (sqObj['width'] * sqObj['height'])**0.2 ) + 1
                         del Objs[i]
 
@@ -272,7 +280,7 @@ def runGame():
                         if playerObj['facing'] == RIGHT:
                             playerObj['surface'] = pygame.transform.scale(R_FROG_IMG, (playerObj['size'], playerObj['size']))
 
-                        if playerObj['size'] > WINSIZE:
+                        if TOWIN <= 0:
                             winMode = True # turn on "win mode"
 
                     elif not invulnerableMode:
@@ -371,21 +379,6 @@ def makeNewfrog(camerax, cameray):
         else: # frog is facing right
             sq['surface'] = pygame.transform.scale(BadObjs[ran2+1], (sq['width'], sq['height']))
         sq['isgood'] = False
-
-    # generalSize = random.randint(5, 25)
-    # multiplier = random.randint(1, 3)
-    # sq['width']  = (generalSize + random.randint(0, 10)) * multiplier
-    # sq['height'] = (generalSize + random.randint(0, 10)) * multiplier
-    # sq['x'], sq['y'] = getRandomOffCameraPos(camerax, cameray, sq['width'], sq['height'])
-    # sq['movex'] = getRandomVelocity()
-    # sq['movey'] = getRandomVelocity()
-    # if sq['movex'] < 0: # frog is facing left
-    #     sq['surface'] = pygame.transform.scale(L_FROG_IMG, (sq['width'], sq['height']))
-    # else: # frog is facing right
-    #     sq['surface'] = pygame.transform.scale(R_FROG_IMG, (sq['width'], sq['height']))
-    # sq['bounce'] = 0
-    # sq['bouncerate'] = random.randint(10, 18)
-    # sq['bounceheight'] = random.randint(10, 50)
     return sq
 
 
