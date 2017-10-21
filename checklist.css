@@ -157,8 +157,9 @@ footer {
   justify-content: flex-end;
   display: flex;
 }
+
 .button {
-    background-color: #666666;
+    background-color: #4CAF50; /* Green */
     border: none;
     color: white;
     padding: 16px 32px;
@@ -172,7 +173,13 @@ footer {
     cursor: pointer;
 }
 
-.button:hover {
-    background-color: #4CAF50;
+.button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+}
+
+.button1:hover {
+    background-color: #008CBA;
     color: white;
 }
