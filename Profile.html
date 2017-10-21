@@ -3,6 +3,55 @@
 <html>
 <head>
 <style type="text/css">
+body {font-family:sans-serif;}
+.avatar {
+	text-decoration:none;
+	margin-left: 570px;
+	background:#36bed4;
+	color:#36bed4;
+	position:relative;
+	padding-left:55px;
+	width:150px;
+	height:180px;
+	border-radius:250px;
+	display:block;
+	line-height:240%;
+	overflow:hidden;
+}
+.avatar:before, .avatar:after {
+	position:absolute;
+	color:#36bed4;
+	background:white;
+	box-shadow:0 0 10px 0px rgba(0,0,0,0.2);
+}
+.avatar:before {
+	content: "\00a0";
+	border: 0px solid white;
+	border-radius: 60px;
+	top: 25px;
+	left: 50%;
+	height: 90px;
+	width:90px;
+	line-height: 70%;
+	font-size: 44px;
+	font-weight: normal;
+	text-indent: -1px;
+	margin-left: -20%;
+	z-index:5;
+}
+.avatar:after {
+	content: "\00a0";
+	border-radius: 20px;
+	top: 115px;
+	left: 50%;
+	width: 100px;
+	height: 103px;
+	text-align: center;
+	font-size: 33px;
+	font-weight: bold;
+	line-height: 130%;
+	margin-left: -25%;
+}
 
 
 	footer{clear: both; padding: 20px;}
@@ -44,28 +93,31 @@ h1 {
 	padding-top: 30px;
 	padding-bottom: 90px;
 	text-decoration: none;
-	font-size: 25px;
+	font-size: 30px;
 	color: white;
 	display: block;
 	transition: 0.3s;
 }
 </style>
 <title>Page Title</title>
-</head>
+
 <body style = "width:100%" img src='studentdashbackground.jpg'>
 
+
+
 <h1 style= "color:white; text-align:center;">Welcome Back!</h1>
-<h2 style= "color:white; text-align:center;">You Have Earned __ Points Today</h2>
+<a class="avatar" href="#">Your Account</a>
+<h2 style= "color:white; text-align:center;">You Have Earned __ Points Today!</h2>
 
 <div class="wrapper"><div id="main"><div class="container-fluid text-center"><div class="row content"><div class="tile">
 
-              <h1><a href="#"><h1 style= "color:white; text-align:center">Streak</h1>
+              <h1 style= "margin-top: -30px; margin-right: 400px"><a href="#"><h3 style= "color:white; text-align:center">Streak</h3>
 
-			<h2 style= "color:white; text-align:center">You've logged in __ days in a row! Your streak is __!</h2></a>
-          </div></div></div></div></div></body>
+			<h1 style= "color:white; text-align:center; margin-top: 100px"><h5>You've logged in __ days in a row! Your streak is __</h5></h1></a>
+          </div></div></div></div></div>
 
+      </body>
 
-</section>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,10 +173,12 @@ html {
 </head>
 <body><div class="wrapper"><div id="main"><div class="container-fluid text-center"><div class="row content"><nav><div class="sidenav">
           <p><a href="#">Profile</a></p>
+
           <p><a href="./Games/games.html">Games</a></p>
           <p><a href="./Education/module.html">Module</a></p>
           <p><a href="./Education/checklist.html">Checklist</a></p>
 					<p><a href="./Login.html">Log Out</a></p>
+
         </div></nav></div></div></div></div></body>
 </html>
 
@@ -134,13 +188,13 @@ html {
 <div class = "tile">
 
 <h1 style= "color:white; text-align:center">Current Level:  </h1>
-<img align ="middle" src="http://vignette1.wikia.nocookie.net/bubbleguppies/images/0/01/Bubble-guppies-51a507249ccdb.png/revision/latest?cb=20140315091042" width = "100" height = "100">
-<h2 style= "color:white; text-align:center">GUPPY</h2>
-<h2 style= "color:white;text-align:center">Badges: </h2>
-<img src="https://i.pinimg.com/736x/4f/ea/2e/4fea2efc345207b133413c411213a8f2--recycling-games-free-printable.jpg" width = "105" height = "105">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbN4j-YQN4El9w7m54Pu6VA9oRwXUyS0zhkrBxFQUgn7FgKyn1ag" width = "95" height = "95">
-<img src="https://i.pinimg.com/736x/3a/cd/89/3acd8944486300389b472a4427f10788--badges-fitbit.jpg" width = "90" height="90">
+<img align ="middle" src="http://vignette1.wikia.nocookie.net/bubbleguppies/images/0/01/Bubble-guppies-51a507249ccdb.png/revision/latest?cb=20140315091042" width = "100" height = "100" > <p style= "color:white;"> Guppy  </p>
+<h1 style= "color:white;text-align:center">Badges: </h1>
+<img src="http://www.test-space.co.uk/V/jb/Images/recycling_logo.png" width = "105" height = "105">
+<img src="http://blog.mass.gov/osd/wp-content/uploads/sites/20/2015/04/recycleearth-288x300.png" width = "95" height = "95">
+<img src="http://juniorstreetchampions.co.uk/wp-content/uploads/2016/03/Recycle_badge.png" width = "90" height="90">
 </div>
+
 <!-- <footer>
 
 <h2 style= "color:white; text-align:center;">Games</h2>
@@ -149,6 +203,7 @@ html {
 <h3 style= "color:white; text-align:center;">Save The Reafs</h3>
 </footer> -->
 
+
 <footer>
 
 <h2 style= "color:white; text-align:center;">Weekly Classroom Goals</h2>
@@ -156,58 +211,7 @@ html {
 </footer>
 
 
-
-
 <p></p>
 
 </body>
 </html>
-
-<!-- <html>
-<head>
-
-<title>Page Title</title>
-</head>
-<body background='studentdashbackground.jpg'>
-
-<h1 style= "color:white; text-align:center;">Welcome Back!</h1>
-<h2 style= "color:white; text-align:center;">You Have Earned __ Points Today</h2>
-
-<h2 style= "color:white;">Streak</h2>
-<h2 style= "color:white;">You've logged in __ days in a row! Your streak is __!</h2>
-
-
-<h2 style= "color:white;">Current Level:  </h2>
-<img src="http://vignette1.wikia.nocookie.net/bubbleguppies/images/0/01/Bubble-guppies-51a507249ccdb.png/revision/latest?cb=20140315091042" width = "100" height = "100">
-<h2 style= "color:white;">GUPPY</h2>
-<h2 style= "color:white;">Badges: </h2>
-<img src="https://i.pinimg.com/736x/4f/ea/2e/4fea2efc345207b133413c411213a8f2--recycling-games-free-printable.jpg" width = "105" height = "105">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbN4j-YQN4El9w7m54Pu6VA9oRwXUyS0zhkrBxFQUgn7FgKyn1ag" width = "95" height = "95">
-<img src="https://i.pinimg.com/736x/3a/cd/89/3acd8944486300389b472a4427f10788--badges-fitbit.jpg" width = "90" height="90">
-
-
-
-
-
-
-<h2 style= "color:white;">Weekly Classroom Goals</h2>
-<h3 style= "color:white;">Every student must bring an empty water bottle every day for recycling!</h3>
-
-
-
-
-<h2 style= "color:white; text-align:center;">Games</h2>
-<h3 style= "color:white; text-align:center;">Shark Frenzy</h3>
-<h3 style= "color:white; text-align:center;">The Licking Frog</h3>
-<h3 style= "color:white; text-align:center;">Save The Reafs</h3>
-
-
-
-
-</table>
-<p></p>
-
-</body>
-</html>
-
- -->

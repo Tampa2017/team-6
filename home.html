@@ -54,7 +54,7 @@
        padding-bottom: 90px;
        text-decoration: none;
        font-size: 25px;
-       color: #666666;
+       color: white;
        display: block;
        transition: 0.3s
 
@@ -114,10 +114,7 @@
       .row.content {height: 100%;
          color: white;
      }
-
       /* Set black background color, white text and some padding */
-
-
       /* On small screens, set height to 'auto' for sidenav and grid */
       @media screen and (max-width: 767px) {
         .sidenav {
@@ -128,7 +125,6 @@
 
         }
       }
-
 
    .tile {
        float: right;
@@ -157,6 +153,42 @@
    .tile img{
      float: left;
    }
+   .container {
+     justify-content: space-between;
+     flex-direction: column;
+     height: 100vh;
+     display: flex;
+   }
+   .container .btn-holder {
+     justify-content: flex-end;
+     display: flex;
+   }
+
+   .button {
+       background-color: #4CAF50; /* Green */
+       border: none;
+       color: white;
+       padding: 16px 32px;
+       text-align: center;
+       text-decoration: none;
+       display: inline-block;
+       font-size: 16px;
+       margin: 4px 2px;
+       -webkit-transition-duration: 0.4s; /* Safari */
+       transition-duration: 0.4s;
+       cursor: pointer;
+   }
+
+   .button1 {
+       background-color: white;
+       color: black;
+       border: 2px solid #008CBA;
+   }
+
+   .button1:hover {
+       background-color: #008CBA;
+       color: white;
+   }
 
    footer {
      background-color: #555;
@@ -173,8 +205,8 @@
         <nav>
         <div class="sidenav">
           <!-- <p><img src="./man-user.png" href="./module.html"/></p> -->
-          <p><a href="./error.html">About Us</a></p>
-          <p><a href="./error.html">Contact Us</a></p>
+          <p><a href="./error.html">About</a></p>
+          <p><a href="./error.html">Contact</a></p>
           <p><a href="./Login.html">Log In</a></p>
 
         </div>
@@ -183,13 +215,16 @@
         <div class="main">
   <h1>Environmental Frenzy </h1>
           <h3>"Small Guppy Actions Make Big Whale Changes"</h3>
-          <h3> Children are the future, so we give them the tools and empowerment they need to start saving the world every day.</h3>
+          <p> Children are the future, so we give them the tools and empowerment they need to start saving the world every day.</p>
+          <p> If your child is interested in participating in this program, please have your child's teacher or another caring adult fill out the form below</p>
+
+          <div class="btn-holder">
+           <p> <button class="button button1"><a href="./registration.html">Registration</button> </p>
+          </div>
        </div>
           <div class = "main">
             <h1>About Us </h1>
               <p> Our nonprofit organization, Ocean's Daughter Conservation Alliance, was founded in 2003 to teach students about the importance of conservation.</p>
-<p>If you are interested in registering your child for this program, please have your child's teacher or another positive adult role model fill out the following
-              <img src="./Images/ODCA"/>
           </div>
 
       </div>
