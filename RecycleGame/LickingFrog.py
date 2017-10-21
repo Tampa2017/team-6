@@ -2,8 +2,8 @@ import random, sys, time, math, pygame
 from pygame.locals import *
 
 FPS = 40 # frames per second to update the screen
-WINWIDTH = 500 # width of the program's window, in pixels
-WINHEIGHT = 500 # height in pixels
+WINWIDTH = 640 # width of the program's window, in pixels
+WINHEIGHT = 480 # height in pixels
 HALF_WINWIDTH = int(WINWIDTH / 2)
 HALF_WINHEIGHT = int(WINHEIGHT / 2)
 
@@ -13,6 +13,8 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0,0,0)
+YELLOW = (255, 255, 0)
+OCEAN_BLUE = (30, 47 * 3 + 50, 74 * 3 + 20)
 
 CAMERASLACK = 90     # how far from the center the frog moves before moving the camera
 MOVERATE = 9         # how fast the player moves
@@ -24,12 +26,14 @@ INVULNTIME = 2       # how long the player is invulnerable after being hit in se
 GAMEOVERTIME = 4     # how long the "game over" text stays on the screen in seconds
 MAXHEALTH = 3        # how much health the player starts with
 
-NUMfrogS = 30    # number of frogs in the active area
+NUMfrogS = 20    # number of frogs in the active area
 frogMINSPEED = 3 # slowest frog speed
 frogMAXSPEED = 7 # fastest frog speed
-DIRCHANGEFREQ = 2    # % chance of direction change per frame
+DIRCHANGEFREQ = 0    # % chance of direction change per frame
 LEFT = 'left'
 RIGHT = 'right'
+
+
 
 """
 This program has three data structures to represent the player, enemy frogs. The data structures are dictionaries with the following keys:
@@ -58,7 +62,7 @@ Grass data structure keys:
 """
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_FROG_IMG, R_FROG_IMG, BACKGROUNDIMAGES
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_FROG_IMG, R_FROG_IMG, BACKGROUNDIMAGES, BadObjs, GoodObjs
 
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -68,19 +72,19 @@ def main():
     BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
 
     # load the image files
-    L_FROG_IMG = pygame.image.load('images/tires.jpg')
+    L_FROG_IMG = pygame.image.load('images/frog.jpg')
     R_FROG_IMG = pygame.transform.flip(L_FROG_IMG, True, False)
     BACKGROUNDIMAGES = []
     BACKGROUNDIMAGES.append(pygame.image.load('images/plain.jpg'))
 
     #Good Array - These things are recyclable
-    GoodObjs = []
-    WATER_BOTTLE_IMG = pygame.image.load("images/waterbottle.jpg")
-    GoodObjs.append("water bottle")
+    L_WATER_BOTTLE_IMG = pygame.image.load("images/waterbottle.jpg")
+    R_WATER_BOTTLE_IMG = pygame.transform.flip(L_WATER_BOTTLE_IMG, True, False)
+    GoodObjs = [L_WATER_BOTTLE_IMG, R_WATER_BOTTLE_IMG]
     #Bad Array - These things aren't recyclable
-    BadObjs = []
-    TIRES_IMG = pygame.image.load("images/tires.jpg")
-    BadObjs.append("tires")
+    L_TIRES_IMG = pygame.image.load("images/tires.jpg")
+    R_TIRES_IMG = pygame.transform.flip(L_TIRES_IMG, True, False)
+    BadObjs = [L_TIRES_IMG, R_TIRES_IMG]
 
     while True:
         runGame()
@@ -99,7 +103,7 @@ def runGame():
     gameOverRect = gameOverSurf.get_rect()
     gameOverRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
-    winSurf = BASICFONT.render('You have achieved OMEGA FROG RECYCLER!', True, GREEN)
+    winSurf = BASICFONT.render('OMEGA FROG RECYCLER!', True, GREEN)
     winRect = winSurf.get_rect()
     winRect.center = (HALF_WINWIDTH, HALF_WINHEIGHT)
 
@@ -170,8 +174,8 @@ def runGame():
         elif playerCentery - (cameray + HALF_WINHEIGHT) > CAMERASLACK:
             cameray = playerCentery - CAMERASLACK - HALF_WINHEIGHT
 
-        # draw the white background
-        DISPLAYSURF.fill(WHITE)
+        # draw the ocean background
+        DISPLAYSURF.fill(OCEAN_BLUE)
 
         # draw the other frogs
         for sObj in Objs:
@@ -258,7 +262,7 @@ def runGame():
                 if 'rect' in sqObj and playerObj['rect'].colliderect(sqObj['rect']):
                     # a player/frog collision has occurred
 
-                    if sqObj['width'] * sqObj['height'] <= playerObj['size']**2:
+                    if (sqObj['isgood'] == True): #* sqObj['height'] <= playerObj['size']**2:
                         # player is larger and eats the frog
                         playerObj['size'] += int( (sqObj['width'] * sqObj['height'])**0.2 ) + 1
                         del Objs[i]
@@ -338,20 +342,50 @@ def getRandomOffCameraPos(camerax, cameray, objWidth, objHeight):
 
 def makeNewfrog(camerax, cameray):
     sq = {}
-    generalSize = random.randint(5, 25)
-    multiplier = random.randint(1, 3)
-    sq['width']  = (generalSize + random.randint(0, 10)) * multiplier
-    sq['height'] = (generalSize + random.randint(0, 10)) * multiplier
+    decider = random.randint(1,10)
+    generalSize = 10
+    sq['width'] = generalSize * 2
+    sq['height'] = generalSize * 2
     sq['x'], sq['y'] = getRandomOffCameraPos(camerax, cameray, sq['width'], sq['height'])
     sq['movex'] = getRandomVelocity()
     sq['movey'] = getRandomVelocity()
-    if sq['movex'] < 0: # frog is facing left
-        sq['surface'] = pygame.transform.scale(L_FROG_IMG, (sq['width'], sq['height']))
-    else: # frog is facing right
-        sq['surface'] = pygame.transform.scale(R_FROG_IMG, (sq['width'], sq['height']))
     sq['bounce'] = 0
-    sq['bouncerate'] = random.randint(10, 18)
-    sq['bounceheight'] = random.randint(10, 50)
+    sq['bouncerate'] = 10
+    sq['bounceheight'] = 10
+    if (decider < 8): #This means we're picking a good object
+        #pick random good object
+        len_good = len(GoodObjs) // 2
+        ran = random.randint(0, len_good-1)
+        if sq['movex'] < 0: # frog is facing left
+            sq['surface'] = pygame.transform.scale(GoodObjs[ran], (sq['width'], sq['height']))
+        else: # frog is facing right
+            sq['surface'] = pygame.transform.scale(GoodObjs[ran+1], (sq['width'], sq['height']))
+        sq['isgood'] = True
+    else: #This means we're picking a bad object
+        #pick random bad object
+        len_bad = len(BadObjs) // 2
+        ran2 = random.randint(0, len_bad-1)
+
+        if sq['movex'] < 0: # frog is facing left
+            sq['surface'] = pygame.transform.scale(BadObjs[ran2], (sq['width'], sq['height']))
+        else: # frog is facing right
+            sq['surface'] = pygame.transform.scale(BadObjs[ran2+1], (sq['width'], sq['height']))
+        sq['isgood'] = False
+
+    # generalSize = random.randint(5, 25)
+    # multiplier = random.randint(1, 3)
+    # sq['width']  = (generalSize + random.randint(0, 10)) * multiplier
+    # sq['height'] = (generalSize + random.randint(0, 10)) * multiplier
+    # sq['x'], sq['y'] = getRandomOffCameraPos(camerax, cameray, sq['width'], sq['height'])
+    # sq['movex'] = getRandomVelocity()
+    # sq['movey'] = getRandomVelocity()
+    # if sq['movex'] < 0: # frog is facing left
+    #     sq['surface'] = pygame.transform.scale(L_FROG_IMG, (sq['width'], sq['height']))
+    # else: # frog is facing right
+    #     sq['surface'] = pygame.transform.scale(R_FROG_IMG, (sq['width'], sq['height']))
+    # sq['bounce'] = 0
+    # sq['bouncerate'] = random.randint(10, 18)
+    # sq['bounceheight'] = random.randint(10, 50)
     return sq
 
 
