@@ -1,7 +1,7 @@
 
 /* The sidenav */
 html {
-  background: url('studentdashbackground.jpg') no-repeat center center fixed;
+  background: url('../studentdashbackground.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -62,9 +62,9 @@ html {
 /* Page content */
 .main {
   height:50%;
-  width: 90%;
+  width: 85%;
   margin-left: 200px; /* Same as the width of the sidenav */
-padding-bottom: 100px;
+padding-bottom: 10px;
 padding-top: 100px;
 text-align: center;
 /*background-color: #4da6ff;*/
@@ -117,7 +117,6 @@ h1 {
     float: right;
     width: 90%;
     height: 50%;
-    padding-bottom: 250px;
     text-align: center;
     background-color: transparent;
     font-family: sans-serif;
@@ -159,7 +158,6 @@ h1 {
     background-color: #008CBA;
     color: white;
 }
-
 
 
 
