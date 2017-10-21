@@ -62,22 +62,24 @@ def main():
 
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
-    pygame.display.set_icon(pygame.image.load('gameicon.png')) #TOCHANGE
+    pygame.display.set_icon(pygame.image.load('images/gameicon.png')) #TOCHANGE
     DISPLAYSURF = pygame.display.set_mode((WINWIDTH, WINHEIGHT))
     pygame.display.set_caption('Licking Frog Man')
     BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
 
     # load the image files
-    L_FROG_IMG = pygame.image.load('frog.jpg')
+    L_FROG_IMG = pygame.image.load('images/tires.jpg')
     R_FROG_IMG = pygame.transform.flip(L_FROG_IMG, True, False)
     BACKGROUNDIMAGES = []
-    BACKGROUNDIMAGES.append(pygame.image.load('plain.jpg'))
+    BACKGROUNDIMAGES.append(pygame.image.load('images/plain.jpg'))
 
     #Good Array - These things are recyclable
     GoodObjs = []
+    WATER_BOTTLE_IMG = pygame.image.load("images/waterbottle.jpg")
     GoodObjs.append("water bottle")
     #Bad Array - These things aren't recyclable
     BadObjs = []
+    TIRES_IMG = pygame.image.load("images/tires.jpg")
     BadObjs.append("tires")
 
     while True:
